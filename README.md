@@ -1,10 +1,12 @@
-# pwa-weather-app
+# Progressive Weather App
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4ca056c9-b3f6-48a4-b28e-ac891850e4ed/deploy-status)](https://app.netlify.com/sites/progressive-weather-15d0d6/deploys)
+[![PWA Shields](https://www.pwa-shields.com/1.0.0/series/classic/white/gray.svg)](https://googlechrome.github.io/lighthouse/viewer/?psiurl=https%3A%2F%2Fprogressive-weather-15d0d6.netlify.app%2F&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&category=pwa&utm_source=lh-chrome-ext#pwa)
+
 Progressive web app reporting weather forecast
 
-Demo: https://progressive-weather-15d0d6.netlify.app/
+Demo: [https://progressive-weather-15d0d6.netlify.app/](https://progressive-weather-15d0d6.netlify.app/)
 
-## Installation Instructions
+## Installation
 
 ### `yarn start`
 
