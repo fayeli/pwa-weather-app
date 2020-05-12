@@ -1,5 +1,8 @@
 # pwa-weather-app
- Progressive web app reporting weather forecast
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4ca056c9-b3f6-48a4-b28e-ac891850e4ed/deploy-status)](https://app.netlify.com/sites/progressive-weather-15d0d6/deploys)
+Progressive web app reporting weather forecast
+
+Demo: https://progressive-weather-15d0d6.netlify.app/
 
 ## Installation Instructions
 
