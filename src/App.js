@@ -1,6 +1,7 @@
 import React from 'react';
-import weather from './weather.svg';
 import './App.css';
+import weatherSVG from './weather.svg';
+import openweather from './api/openweather';
 
 class App extends React.Component {
   state = {
@@ -11,8 +12,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getLocation();
+    this.getForecast();
   }
-
 
   getLocation() {
     window.navigator.geolocation.getCurrentPosition(
@@ -24,16 +25,29 @@ class App extends React.Component {
         })
       },
       (err) => {
-        this.setState({ locationErr: err.message});
+        this.setState({ locationErr: err.message });
       }
     );
+  }
+
+  getForecast() {
+    openweather.get('/onecall', {
+      params: {
+        lat: 1.30,
+        lon: 103.86
+      }
+    }).then(response => {
+      console.log(response.data);
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={weather} className="App-logo" alt="logo" />
+          <img src={weatherSVG} className="App-logo" alt="logo" />
           <p>
             Progressive Weather App
         </p>
