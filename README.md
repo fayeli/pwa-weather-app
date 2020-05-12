@@ -21,4 +21,4 @@ TBA
 ## Credits
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-The animated weather SVG icons were created by [amCharts](https://www.amcharts.com/free-animated-svg-weather-icons/.
+The animated weather SVG icons were created by [amCharts](https://www.amcharts.com/free-animated-svg-weather-icons/).
