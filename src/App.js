@@ -6,23 +6,23 @@ import SevenDayForecast from './components/SevenDayForecast';
 
 class App extends React.Component {
   state = {
-    latitude: null,
-    longitude: null,
+    location: null,
     locationErr: '',
     isOffline: false,
   }
 
   componentDidMount() {
-    this.getLocation();
     this.monitorNetworkStatus();
   }
 
-  getLocation() {
+  getUserLocation = () => {
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          location: {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude
+          },
           locationErr: '',
         })
       },
@@ -51,7 +51,9 @@ class App extends React.Component {
           <p>
             Progressive Weather App
           </p>
-          <SevenDayForecast lat='1.308' lon='103.863' />
+          <p>7 Day Forecast for your current location</p>
+          <button onClick={this.getUserLocation}>Check Now ➜</button>
+          <SevenDayForecast location={this.state.location} />
           <p className="App-blue-text">
             Forecast for your favourite cities <i>(Coming Soon)</i>
           </p>

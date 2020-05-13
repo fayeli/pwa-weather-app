@@ -11,11 +11,19 @@ class SevenDayForecast extends React.Component {
         this.getForecast();
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.getForecast();
+        }
+    }
+
+
     getForecast() {
+        if (this.props.location == null) { return }; 
         openweather.get('/onecall', {
             params: {
-                lat: this.props.lat,
-                lon: this.props.lon,
+                lat: this.props.location.lat,
+                lon: this.props.location.lon,
                 units: 'metric',
                 exclude: 'current,hourly,minutely'
             }
@@ -44,7 +52,6 @@ class SevenDayForecast extends React.Component {
     render() {
         return (
             <div>
-                <p>7 Day Forecast for (latitude: {this.props.lat}, longitude: {this.props.lon})</p>
                 <ul>
                     {this.renderList()}
                 </ul>
