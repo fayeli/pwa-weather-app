@@ -2,17 +2,20 @@ import React from 'react';
 import './App.css';
 import weatherSVG from './weather.svg';
 import openweather from './api/openweather';
+import OfflineBanner from './components/OfflineBanner';
 
 class App extends React.Component {
   state = {
     latitude: null,
     longitude: null,
     locationErr: '',
+    isOffline: false,
   }
 
   componentDidMount() {
     this.getLocation();
     this.getForecast();
+    this.monitorNetworkStatus();
   }
 
   getLocation() {
@@ -43,9 +46,20 @@ class App extends React.Component {
     });
   }
 
+  monitorNetworkStatus() {
+    window.addEventListener('offline', (event) => {
+      this.setState({isOffline: true});
+    });
+    window.addEventListener('online', (event) => {
+      this.setState({isOffline: false});
+    });
+  }
+
   render() {
+    const isOffline = this.state.isOffline;
     return (
       <div className="App">
+        {isOffline ? <OfflineBanner /> : null}
         <header className="App-header">
           <img src={weatherSVG} className="App-logo" alt="logo" />
           <p>
