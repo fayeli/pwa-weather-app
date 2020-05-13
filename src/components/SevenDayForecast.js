@@ -1,10 +1,12 @@
 import React from 'react';
 import openweather from '../api/openweather';
+import Spinner from './Spinner';
 
 class SevenDayForecast extends React.Component {
     state = {
         openweatherData: [], // TODO: save to local storage
-        openweatherErr: null
+        openweatherErr: null,
+        isLoading: false,
     }
 
     componentDidMount() {
@@ -20,6 +22,7 @@ class SevenDayForecast extends React.Component {
 
     getForecast() {
         if (this.props.location == null) { return }; 
+        this.setState({isLoading: true});
         openweather.get('/onecall', {
             params: {
                 lat: this.props.location.lat,
@@ -29,10 +32,16 @@ class SevenDayForecast extends React.Component {
             }
         }).then(response => {
             console.log(response.data);
-            this.setState({openweatherData: response.data.daily});
+            this.setState({
+                openweatherData: response.data.daily,
+                isLoading: false
+            });
         }).catch(error => {
             console.log(error);
-            this.setState({openweatherErr: error});
+            this.setState({
+                openweatherErr: error,
+                isLoading: false
+            });
         });
     }
 
@@ -50,13 +59,17 @@ class SevenDayForecast extends React.Component {
     }
 
     render() {
+        const isLoading = this.state.isLoading;
+        if (isLoading) {
+            return <Spinner />;
+        }
         return (
             <div>
                 <ul>
                     {this.renderList()}
                 </ul>
             </div>
-        )
+        );
     }
 }
 
