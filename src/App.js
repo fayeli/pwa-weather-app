@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import weatherSVG from './weather.svg';
-import openweather from './api/openweather';
 import OfflineBanner from './components/OfflineBanner';
+import SevenDayForecast from './components/SevenDayForecast';
 
 class App extends React.Component {
   state = {
@@ -14,7 +14,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getLocation();
-    this.getForecast();
     this.monitorNetworkStatus();
   }
 
@@ -31,19 +30,6 @@ class App extends React.Component {
         this.setState({ locationErr: err.message });
       }
     );
-  }
-
-  getForecast() {
-    openweather.get('/onecall', {
-      params: {
-        lat: 1.30,
-        lon: 103.86
-      }
-    }).then(response => {
-      console.log(response.data);
-    }).catch(error => {
-      console.log(error);
-    });
   }
 
   monitorNetworkStatus() {
@@ -64,9 +50,10 @@ class App extends React.Component {
           <img src={weatherSVG} className="App-logo" alt="logo" />
           <p>
             Progressive Weather App
-        </p>
+          </p>
+          <SevenDayForecast lat='1.308' lon='103.863' />
           <p className="App-blue-text">
-            <i>Coming Soon</i>
+            Forecast for your favourite cities <i>(Coming Soon)</i>
           </p>
         </header>
       </div>
