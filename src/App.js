@@ -7,7 +7,7 @@ import SevenDayForecast from './components/SevenDayForecast';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       location: null,
       locationErr: '',
@@ -56,8 +56,8 @@ class App extends React.Component {
             Progressive Weather App
           </p>
           <p>7 Day Forecast for your current location</p>
-          <button onClick={this.getUserLocation}>Check Now ➜</button>
-          <SevenDayForecast location={this.state.location} isOffline={this.state.isOffline}/>
+          <button onClick={this.getUserLocation} disabled={isOffline}>Check Now ➜</button>
+          <SevenDayForecast location={this.state.location} isOffline={isOffline}/>
           <p className="App-blue-text">
             Forecast for your favourite cities <i>(Coming Soon)</i>
           </p>
