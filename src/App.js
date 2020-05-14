@@ -5,10 +5,14 @@ import OfflineBanner from './components/OfflineBanner';
 import SevenDayForecast from './components/SevenDayForecast';
 
 class App extends React.Component {
-  state = {
-    location: null,
-    locationErr: '',
-    isOffline: false,
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      location: null,
+      locationErr: '',
+      isOffline: !window.navigator.onLine,
+    }
   }
 
   componentDidMount() {
