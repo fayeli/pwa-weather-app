@@ -82,9 +82,10 @@ class SevenDayForecast extends React.Component {
                     const description = data.weather[0].description;
                     const dayTemp = Math.round(data.temp.day);
                     const nightTemp = Math.round(data.temp.night);
+                    const date = moment(data.dt*1000).calendar().split(" ")[0];
                     return (
                         <li key={data.dt}>
-                            {description}, day: {dayTemp}°C, night: {nightTemp}°C
+                            {date}: {description}, day: {dayTemp}°C, night: {nightTemp}°C
                         </li>
                     )
                 })}
