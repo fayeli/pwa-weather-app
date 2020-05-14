@@ -4,11 +4,17 @@ import openweather from '../api/openweather';
 import Spinner from './Spinner';
 
 class SevenDayForecast extends React.Component {
-    state = {
-        openweatherData: [],
-        openweatherErr: null,
-        isLoading: false,
-        lastSaved: null,
+    constructor(props) {
+        super(props);
+
+        const hasSaved = !!localStorage.getItem('lastSaved');
+
+        this.state = {
+            openweatherData: [],
+            openweatherErr: null,
+            isLoading: false,
+            lastSaved: hasSaved ? JSON.parse(localStorage.getItem('lastSaved')) : null
+        }
     }
 
     componentDidMount() {
@@ -22,6 +28,10 @@ class SevenDayForecast extends React.Component {
     }
 
     getForecast() {
+        if (this.props.isOffline) {
+            this.retrieveOffline();
+            return;
+        }
         if (this.props.location == null) { return }
         this.setState({ isLoading: true });
         openweather.get('/onecall', {
@@ -46,10 +56,18 @@ class SevenDayForecast extends React.Component {
         });
     }
 
+    retrieveOffline() {
+        const hasOfflineData = !!localStorage.getItem('offlineData');
+        if (hasOfflineData) {
+            const openweatherData = JSON.parse(localStorage.getItem('offlineData'));
+            this.setState({ openweatherData });
+        }
+    }
+
     saveData = () => {
         const dateNow = Date.now();
         this.setState({ lastSaved: dateNow });
-        localStorage.setItem('lastSaved', dateNow);
+        localStorage.setItem('lastSaved', JSON.stringify(dateNow));
         localStorage.setItem('offlineData', JSON.stringify(this.state.openweatherData));
     }
 

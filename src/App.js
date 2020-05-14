@@ -53,7 +53,7 @@ class App extends React.Component {
           </p>
           <p>7 Day Forecast for your current location</p>
           <button onClick={this.getUserLocation}>Check Now ➜</button>
-          <SevenDayForecast location={this.state.location} />
+          <SevenDayForecast location={this.state.location} isOffline={this.state.isOffline}/>
           <p className="App-blue-text">
             Forecast for your favourite cities <i>(Coming Soon)</i>
           </p>
