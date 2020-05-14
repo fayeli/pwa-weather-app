@@ -42,13 +42,11 @@ class SevenDayForecast extends React.Component {
                 exclude: 'current,hourly,minutely'
             }
         }).then(response => {
-            console.log(response.data);
             this.setState({
                 openweatherData: response.data.daily,
                 isLoading: false
             });
         }).catch(error => {
-            console.log(error);
             this.setState({
                 openweatherErr: error,
                 isLoading: false

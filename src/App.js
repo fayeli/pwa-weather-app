@@ -10,7 +10,8 @@ class App extends React.Component {
 
     this.state = {
       location: null,
-      locationErr: '',
+      locationError: null,
+      locationErrorCode: null,
       isOffline: !window.navigator.onLine,
     }
   }
@@ -27,11 +28,15 @@ class App extends React.Component {
             lat: position.coords.latitude,
             lon: position.coords.longitude
           },
-          locationErr: '',
+          locationError: null,
+          locationErrorCode: null,
         })
       },
       (err) => {
-        this.setState({ locationErr: err.message });
+        this.setState({ 
+          locationError: err.message,
+          locationErrorCode: err.code
+        });
       }
     );
   }
@@ -47,6 +52,7 @@ class App extends React.Component {
 
   render() {
     const isOffline = this.state.isOffline;
+    const locationDenied = this.state.locationErrorCode === 1; // GeolocationPositionError.PERMISSION_DENIED
     return (
       <div className="App">
         {isOffline ? <OfflineBanner /> : null}
@@ -57,6 +63,7 @@ class App extends React.Component {
           </p>
           <p>7 Day Forecast for your current location</p>
           <button onClick={this.getUserLocation} disabled={isOffline}>Check Now ➜</button>
+          {locationDenied ? <p>We're unable to get your location. Please check your permission settings and try again.</p> : null}
           <SevenDayForecast location={this.state.location} isOffline={isOffline}/>
           <p className="App-blue-text">
             Forecast for your favourite cities <i>(Coming Soon)</i>
