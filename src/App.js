@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
-import weatherSVG from './weather.svg';
+import Header from './components/Header';
 import OfflineBanner from './components/OfflineBanner';
 import SevenDayForecast from './components/SevenDayForecast';
+import CityList from './components/CityList';
 import cities from './data/cities';
 
 class App extends React.Component {
@@ -13,7 +14,7 @@ class App extends React.Component {
     // initialize location based on url
     let locationName = 'your current location';
     let locationCoords = null;
-    const path = window.location.pathname.replace('/','');
+    const path = window.location.pathname.replace('/', '');
 
     if (cities[path]) {
       locationName = cities[path].name;
@@ -70,18 +71,6 @@ class App extends React.Component {
     });
   }
 
-  renderCityList() {
-    return Object.keys(cities).map((key) => {
-      return (
-        <li key={key}>
-          <Link to={`/${key}`} onClick={() => this.selectLocation(key)}>
-            {cities[key].name}
-          </Link>
-        </li>
-      );
-    });
-  }
-
   renderUserLocation() {
     const isOffline = this.state.isOffline;
     const locationDenied = this.state.locationErrorCode === 1; // GeolocationPositionError.PERMISSION_DENIED
@@ -98,28 +87,16 @@ class App extends React.Component {
     const userLocation = this.state.locationName === 'your current location';
     return (
       <div className="App">
-        {isOffline ? <OfflineBanner /> : null}
         <BrowserRouter>
-          <header className="App-header">
-            <img src={weatherSVG} className="App-logo" alt="logo" />
-            <p>
-              Progressive Weather App
-            </p>
-
-            <p>7 Day Forecast for {this.state.locationName}</p>
-
-            {userLocation ? this.renderUserLocation() : null}
-
-            <SevenDayForecast location={this.state.locationCoords} isOffline={isOffline} />
-          </header>
-          <div className="App-blue-text">
-            <p>Forecast for your favourite cities <i>(Coming Soon)</i></p>
-            <ul>
-              {this.renderCityList()}
-            </ul>
-          </div>
+          {isOffline ? <OfflineBanner /> : null}
+          <Header />
+          <h3>7 Day Forecast for {this.state.locationName}</h3>
+          {userLocation ? this.renderUserLocation() : null}
+          <SevenDayForecast location={this.state.locationCoords} isOffline={isOffline} />
+          <h3>Forecast for your favourite cities</h3>
+          <CityList onSelect={(city) => this.selectLocation(city)}/>  
         </BrowserRouter>
-      </div>
+      </div >
     );
   }
 }
