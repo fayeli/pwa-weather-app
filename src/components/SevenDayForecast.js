@@ -33,6 +33,9 @@ class SevenDayForecast extends React.Component {
         if (this.props.coords !== prevProps.coords) {
             this.getForecast();
         }
+        if (this.props.isOffline !== prevProps.isOffline && !this.props.isOffline) {
+            this.getForecast();
+        }
     }
 
     getForecast() {
