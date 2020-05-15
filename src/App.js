@@ -36,14 +36,27 @@ const cities = {
     }
   }
 };
+// TODO: move data to another file
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
+    // initialize location based on url
+    let locationName = 'your current location';
+    let locationCoords = null;
+    
+    console.log(window.location.pathname);
+    const path = window.location.pathname.replace('/','');
+
+    if (cities[path]) {
+      locationName = cities[path].name;
+      locationCoords = cities[path].coords;
+    }
+
     this.state = {
-      locationName: 'your current location',
-      locationCoords: null,
+      locationName,
+      locationCoords,
       locationError: null,
       locationErrorCode: null,
       isOffline: !window.navigator.onLine,
@@ -103,9 +116,20 @@ class App extends React.Component {
     });
   }
 
-  render() {
+  renderUserLocation() {
     const isOffline = this.state.isOffline;
     const locationDenied = this.state.locationErrorCode === 1; // GeolocationPositionError.PERMISSION_DENIED
+    return (
+      <div>
+        <button onClick={this.getUserLocation} disabled={isOffline}>Check Now ➜</button>
+        {locationDenied ? <p>We're unable to get your location. Please check your permission settings and try again.</p> : null}
+      </div>
+    );
+  }
+
+  render() {
+    const isOffline = this.state.isOffline;
+    const userLocation = this.state.locationName === 'your current location';
     return (
       <div className="App">
         {isOffline ? <OfflineBanner /> : null}
@@ -118,10 +142,7 @@ class App extends React.Component {
 
             <p>7 Day Forecast for {this.state.locationName}</p>
 
-            <Route path="/" exact>
-              <button onClick={this.getUserLocation} disabled={isOffline}>Check Now ➜</button>
-              {locationDenied ? <p>We're unable to get your location. Please check your permission settings and try again.</p> : null}
-            </Route>
+            {userLocation ? this.renderUserLocation() : null}
 
             <SevenDayForecast location={this.state.locationCoords} isOffline={isOffline} />
           </header>
