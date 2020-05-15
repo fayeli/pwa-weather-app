@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import OfflineBanner from './components/OfflineBanner';
+import UserLocation from './components/UserLocation';
 import SevenDayForecast from './components/SevenDayForecast';
 import CityList from './components/CityList';
 import cities from './data/cities';
@@ -24,35 +25,12 @@ class App extends React.Component {
     this.state = {
       locationName,
       locationCoords,
-      locationError: null,
-      locationErrorCode: null,
       isOffline: !window.navigator.onLine,
     }
   }
 
   componentDidMount() {
     this.monitorNetworkStatus();
-  }
-
-  getUserLocation = () => {
-    window.navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          locationCoords: {
-            lat: position.coords.latitude,
-            lon: position.coords.longitude
-          },
-          locationError: null,
-          locationErrorCode: null,
-        })
-      },
-      (err) => {
-        this.setState({
-          locationError: err.message,
-          locationErrorCode: err.code
-        });
-      }
-    );
   }
 
   monitorNetworkStatus() {
@@ -71,17 +49,6 @@ class App extends React.Component {
     });
   }
 
-  renderUserLocation() {
-    const isOffline = this.state.isOffline;
-    const locationDenied = this.state.locationErrorCode === 1; // GeolocationPositionError.PERMISSION_DENIED
-    return (
-      <div>
-        <button onClick={this.getUserLocation} disabled={isOffline}>Check Now ➜</button>
-        {locationDenied ? <p>We're unable to get your location. Please check your permission settings and try again.</p> : null}
-      </div>
-    );
-  }
-
   render() {
     const isOffline = this.state.isOffline;
     const userLocation = this.state.locationName === 'your current location';
@@ -91,10 +58,10 @@ class App extends React.Component {
           {isOffline ? <OfflineBanner /> : null}
           <Header />
           <h3>7 Day Forecast for {this.state.locationName}</h3>
-          {userLocation ? this.renderUserLocation() : null}
+          {userLocation ? <UserLocation onSuccess={(coords) => this.setState({ locationCoords: coords })} /> : null}
           <SevenDayForecast location={this.state.locationCoords} isOffline={isOffline} />
           <h3>Forecast for your favourite cities</h3>
-          <CityList onSelect={(city) => this.selectLocation(city)}/>  
+          <CityList onSelect={(city) => this.selectLocation(city)} />
         </BrowserRouter>
       </div >
     );
