@@ -7,13 +7,14 @@ class SevenDayForecast extends React.Component {
     constructor(props) {
         super(props);
 
-        const hasSaved = !!localStorage.getItem('lastSaved');
+        const name = this.props.name;
+        const hasSaved = !!localStorage.getItem(`lastSaved_${name}`);
 
         this.state = {
             openweatherData: [],
             openweatherErr: null,
             isLoading: false,
-            lastSaved: hasSaved ? JSON.parse(localStorage.getItem('lastSaved')) : null
+            lastSaved: hasSaved ? JSON.parse(localStorage.getItem(`lastSaved_${name}`)) : null
         }
     }
 
@@ -22,7 +23,14 @@ class SevenDayForecast extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.location !== prevProps.location) {
+        if (this.props.name !== prevProps.name) {
+            const name = this.props.name;
+            const hasSaved = !!localStorage.getItem(`lastSaved_${name}`);
+            this.setState({
+                lastSaved: hasSaved ? JSON.parse(localStorage.getItem(`lastSaved_${name}`)) : null
+            });
+        }
+        if (this.props.coords !== prevProps.coords) {
             this.getForecast();
         }
     }
@@ -32,12 +40,12 @@ class SevenDayForecast extends React.Component {
             this.retrieveOffline();
             return;
         }
-        if (this.props.location == null) { return }
+        if (this.props.coords == null) { return }
         this.setState({ isLoading: true });
         openweather.get('/onecall', {
             params: {
-                lat: this.props.location.lat,
-                lon: this.props.location.lon,
+                lat: this.props.coords.lat,
+                lon: this.props.coords.lon,
                 units: 'metric',
                 exclude: 'current,hourly,minutely'
             }
@@ -55,22 +63,33 @@ class SevenDayForecast extends React.Component {
     }
 
     retrieveOffline() {
-        const hasOfflineData = !!localStorage.getItem('offlineData');
+        const name = this.props.name;
+        const hasOfflineData = !!localStorage.getItem(`offlineData_${name}`);
         if (hasOfflineData) {
-            const openweatherData = JSON.parse(localStorage.getItem('offlineData'));
+            const openweatherData = JSON.parse(localStorage.getItem(`offlineData_${name}`));
             this.setState({ openweatherData });
+        } else {
+            this.setState({ openweatherData: []});
         }
     }
 
     saveData = () => {
         const dateNow = Date.now();
+        const name = this.props.name;
         this.setState({ lastSaved: dateNow });
-        localStorage.setItem('lastSaved', JSON.stringify(dateNow));
-        localStorage.setItem('offlineData', JSON.stringify(this.state.openweatherData));
+        localStorage.setItem(`lastSaved_${name}`, JSON.stringify(dateNow));
+        localStorage.setItem(`offlineData_${name}`, JSON.stringify(this.state.openweatherData));
     }
 
     renderList() {
         const isLoading = this.state.isLoading;
+        const isOffline = this.props.isOffline;
+        const hasData = this.state.openweatherData.length ? true : false;
+        if (isOffline && !hasData) {
+            // maybe TODO: schedule web request with background sync
+            // maybe TODO: push notification when you are back online
+            return <div>Oops.. you have not saved offline weather report for this location.</div>
+        }
         if (isLoading) {
             return <Spinner />;
         }
@@ -80,7 +99,7 @@ class SevenDayForecast extends React.Component {
                     const description = data.weather[0].description;
                     const dayTemp = Math.round(data.temp.day);
                     const nightTemp = Math.round(data.temp.night);
-                    const date = moment(data.dt*1000).calendar().split(" ")[0];
+                    const date = moment(data.dt * 1000).calendar().split(" ")[0];
                     return (
                         <li key={data.dt}>
                             {date}: {description}, day: {dayTemp}°C, night: {nightTemp}°C

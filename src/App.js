@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import OfflineBanner from './components/OfflineBanner';
@@ -15,14 +15,17 @@ class App extends React.Component {
     // initialize location based on url
     let locationName = 'your current location';
     let locationCoords = null;
-    const path = window.location.pathname.replace('/', '');
+    let path = window.location.pathname.replace('/', '');
 
     if (cities[path]) {
       locationName = cities[path].name;
       locationCoords = cities[path].coords;
+    } else {
+      path = 'current-location';
     }
 
     this.state = {
+      path,
       locationName,
       locationCoords,
       isOffline: !window.navigator.onLine,
@@ -44,6 +47,7 @@ class App extends React.Component {
 
   selectLocation = (city) => {
     this.setState({
+      path: city,
       locationName: cities[city].name,
       locationCoords: cities[city].coords,
     });
@@ -58,8 +62,8 @@ class App extends React.Component {
           {isOffline ? <OfflineBanner /> : null}
           <Header />
           <h3>7 Day Forecast for {this.state.locationName}</h3>
-          {userLocation ? <UserLocation onSuccess={(coords) => this.setState({ locationCoords: coords })} /> : null}
-          <SevenDayForecast location={this.state.locationCoords} isOffline={isOffline} />
+          {userLocation ? <UserLocation onSuccess={(coords) => this.setState({ locationCoords: coords })} isOffline={isOffline} /> : null}
+          <SevenDayForecast name={this.state.path} coords={this.state.locationCoords} isOffline={isOffline} />
           <h3>Forecast for your favourite cities</h3>
           <CityList onSelect={(city) => this.selectLocation(city)} />
         </BrowserRouter>
