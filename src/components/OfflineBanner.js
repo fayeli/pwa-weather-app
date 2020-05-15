@@ -1,8 +1,9 @@
 import React from 'react';
+import './OfflineBanner.css'
 
 const OfflineBanner = () => {
     return (
-        <div>You are currently offline.</div>
+        <div className="OfflineBanner">You are currently offline.</div>
     );
 };
 
