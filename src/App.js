@@ -4,39 +4,7 @@ import './App.css';
 import weatherSVG from './weather.svg';
 import OfflineBanner from './components/OfflineBanner';
 import SevenDayForecast from './components/SevenDayForecast';
-
-
-const cities = {
-  'hong-kong': {
-    name: 'Hong Kong',
-    coords: {
-      lat: 22.28552,
-      lon: 114.15769
-    }
-  },
-  'singapore': {
-    name: 'Singapore',
-    coords: {
-      lat: 1.28967,
-      lon: 103.85007
-    }
-  },
-  'san-francisco': {
-    name: 'San Francisco',
-    coords: {
-      lat: 37.774929,
-      lon: -122.419416
-    }
-  },
-  'tokyo': {
-    name: 'Tokyo',
-    coords: {
-      lat: 35.689487,
-      lon: 139.691706
-    }
-  }
-};
-// TODO: move data to another file
+import cities from './data/cities';
 
 class App extends React.Component {
   constructor(props) {
@@ -45,8 +13,6 @@ class App extends React.Component {
     // initialize location based on url
     let locationName = 'your current location';
     let locationCoords = null;
-    
-    console.log(window.location.pathname);
     const path = window.location.pathname.replace('/','');
 
     if (cities[path]) {
