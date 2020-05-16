@@ -1,14 +1,17 @@
 import React from 'react';
+import { IonHeader, IonToolbar, IonTitle } from '@ionic/react';
 import weather from '../weather.svg';
 
 const Header = () => {
     return (
-        <header className="App-header">
-            <img src={weather} className="App-logo" alt="logo" />
-            <p>
-                Progressive Weather App
-        </p>
-        </header>
+        <IonHeader>
+            <IonToolbar>
+                <IonTitle>
+                    {/* <img src={weather} className="App-logo" alt="logo" /> */}
+                    Progressive Weather App
+                </IonTitle>
+            </IonToolbar>
+        </IonHeader>
     );
 };
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import '@ionic/react/css/core.css';
+import '@ionic/react/css/padding.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
