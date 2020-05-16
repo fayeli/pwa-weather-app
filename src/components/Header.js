@@ -1,6 +1,5 @@
 import React from 'react';
 import { IonHeader, IonToolbar, IonTitle } from '@ionic/react';
-import weather from '../weather.svg';
 
 const Header = () => {
     return (
