@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import { IonApp, IonPage, IonContent } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
 
 import Header from './components/Header';
 import OfflineBanner from './components/OfflineBanner';
@@ -60,7 +61,7 @@ class App extends React.Component {
     const userLocation = this.state.locationName === 'your current location';
     return (
       <IonApp>
-        <BrowserRouter>
+        <IonReactRouter>
           <IonPage>
             {isOffline ? <OfflineBanner /> : null}
             <Header />
@@ -72,7 +73,7 @@ class App extends React.Component {
               <CityList onSelect={(city) => this.selectLocation(city)} />
             </IonContent>
           </IonPage>
-        </BrowserRouter>
+        </IonReactRouter>
       </IonApp>
     );
   }
