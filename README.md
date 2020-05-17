@@ -23,7 +23,11 @@ It correctly bundles React in production mode and optimizes the build for the be
 TBA
 
 
-## Credits
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-The animated weather SVG icons were created by [amCharts](https://www.amcharts.com/free-animated-svg-weather-icons/).
+## Resources
+This project was built with the following list of frameworks, APIs and resources:
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Web requests using [axios](https://www.npmjs.com/package/axios) library
+- Open weather API - https://openweathermap.org/api/one-call-api
+- Parsing dates with [Moment.js](https://momentjs.com/)
+- Cross-platform mobile UI components from [Ionic](https://github.com/ionic-team/ionic)
+- Deployed demo with [Netlify](https://www.netlify.com/)
