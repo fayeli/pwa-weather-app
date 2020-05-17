@@ -1,4 +1,5 @@
 import React from 'react';
+import { IonButton } from '@ionic/react';
 
 class UserLocation extends React.Component {
     state = {
@@ -38,7 +39,14 @@ class UserLocation extends React.Component {
         const locationDenied = this.state.locationErrorCode === 1; // GeolocationPositionError.PERMISSION_DENIED
         return (
             <div>
-                <button onClick={this.getUserLocation} disabled={isOffline}>Check Now ➜</button>
+                <IonButton
+                    shape="round"
+                    color="secondary"
+                    onClick={this.getUserLocation}
+                    disabled={isOffline}
+                ß>
+                    Check Now ➜
+                </IonButton>
                 {locationDenied ? <p>We're unable to get your location. Please check your permission settings and try again.</p> : null}
             </div>
         );

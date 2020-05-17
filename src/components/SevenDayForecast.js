@@ -1,4 +1,5 @@
 import React from 'react';
+import { IonChip } from '@ionic/react';
 import moment from 'moment';
 import openweather from '../api/openweather';
 import Spinner from './Spinner';
@@ -119,7 +120,7 @@ class SevenDayForecast extends React.Component {
         const hasSaved = !!this.state.lastSaved;
         return (
             <div>
-                <button onClick={this.saveData}>Save for Offline</button>
+                <IonChip color="secondary" onClick={this.saveData}>Save for Offline</IonChip>
                 {hasSaved ? <p>Last saved - {moment(this.state.lastSaved).calendar()} </p> : null}
             </div>
         );
