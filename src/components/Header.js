@@ -6,7 +6,6 @@ const Header = () => {
         <IonHeader>
             <IonToolbar>
                 <IonTitle>
-                    {/* <img src={weather} className="App-logo" alt="logo" /> */}
                     Progressive Weather App
                 </IonTitle>
             </IonToolbar>

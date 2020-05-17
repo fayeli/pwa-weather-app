@@ -1,7 +1,9 @@
-.OfflineBanner {
-    position: fixed;
+.offline-banner {
+    text-align: center;    
+    background-color: rgba(244,245,248,0.9);
+    padding: 15px;
     width: 100%;
-    top: 0;
-    background: white;
-    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

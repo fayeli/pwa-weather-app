@@ -1,7 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import './App.css';
-import { IonApp, IonPage, IonContent } from '@ionic/react';
+import { IonApp, IonPage, IonContent, IonListHeader } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 import Header from './components/Header';
@@ -63,12 +61,15 @@ class App extends React.Component {
       <IonApp>
         <IonReactRouter>
           <IonPage>
-            {isOffline ? <OfflineBanner /> : null}
             <Header />
-            <IonContent className="ion-padding">
-              <h3>7 Day Forecast for {this.state.locationName}</h3>
+            <IonContent fullscreen style={{textAlign: 'center'}}>
+              {isOffline ? <OfflineBanner /> : null}
+                <h3 style={{ paddingTop: '50px' }}>7 Day Forecast for {this.state.locationName}</h3>
               {userLocation ? <UserLocation onSuccess={(coords) => this.setState({ locationCoords: coords })} isOffline={isOffline} /> : null}
-              <SevenDayForecast name={this.state.path} coords={this.state.locationCoords} isOffline={isOffline} />
+              <SevenDayForecast
+                name={this.state.path}
+                coords={this.state.locationCoords}
+                isOffline={isOffline} />
               <h3>Forecast for your favourite cities</h3>
               <CityList onSelect={(city) => this.selectLocation(city)} />
             </IonContent>
