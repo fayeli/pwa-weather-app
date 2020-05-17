@@ -8,14 +8,21 @@ Demo: [https://progressive-weather-15d0d6.netlify.app/](https://progressive-weat
 
 ## Installation
 
-### `yarn start`
+#### iOS
+Visit https://progressive-weather-15d0d6.netlify.app/ on **Safari**. 
+You can install the app by tapping the share button (square icon with upward arrow at the bottom bar) > Add to Home Screen > Add.
 
-Runs the app in the development mode.<br />
+#### Android
+Visit https://progressive-weather-15d0d6.netlify.app/ on Chrome.
+You can install the app from the three dot menu (next to the address bar) > Add to Home screen or through the Add to Home screen banner.
+
+#### Development
+`yarn start`
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
+`yarn build`
+Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 ## Features
