@@ -1,9 +1,6 @@
 .offline-banner {
     text-align: center;    
     background-color: rgba(244,245,248,0.9);
-    padding: 15px;
+    padding: 15px 0;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

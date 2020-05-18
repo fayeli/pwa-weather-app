@@ -26,8 +26,16 @@ Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 ## Features
+- **7 Day Forecast for Your Location**: Using the Geolocation API, the app asks for your current location and displays the corresponding weather report.
+- **Offline Mode**: The app works independent to internet connectivitiy thanks to service workers serving cached files. When network connection is not available, you will see the offline mode banner at the top. In addition to that, the app saves weather data in local storage allowing you to browse the saved forecasts offline.
+- **Forecast for Cities Worldwide**: City forecasts are implemented on the route level such that the URL indicates the application state. This allows you to share a link (e.g. https://progressive-weather-15d0d6.netlify.app/tokyo) and the app automatically loads forecast for a specific city.
+- **Mobile-friendly UI**: All UI elements are optimized for cross-platform support, creating an app-like experience on mobile devices even though it is built on web technologies.
 
-TBA
+#### Future Work
+- **Full Cities Support**: ability to search and save new cities to your favourite list.
+- **Hourly Forecast**: make use of the rich data provided by the API and create more detailed weather reports.
+- **Other PWA Features**: provide features such as background sync and push notifications if the device/browser supports them.
+- **Skeleton Screens**: progressive loading content to skeleton screens for a smoother app experience.
 
 
 ## Resources
